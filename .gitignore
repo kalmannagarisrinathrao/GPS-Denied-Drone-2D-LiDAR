@@ -1,0 +1,27 @@
+# ROS 2 generated files
+build/
+install/
+log/
+
+# Python generated files
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# IDE files
+.vscode/
+.idea/
+
+# Temporary and backup files
+*.backup
+*.backup2
+*.tmp
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Environment and secrets
+.env
+.env.*
