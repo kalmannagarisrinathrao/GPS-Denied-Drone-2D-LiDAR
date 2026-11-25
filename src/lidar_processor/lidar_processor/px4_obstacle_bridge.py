@@ -39,7 +39,6 @@ class PX4ObstacleBridge(Node):
         msg.min_distance = 10
         msg.max_distance = 3000
 
-        # 65535 = unknown; 3001 = clear beyond maximum range
         distances = [65535] * 72
 
         for i, distance in enumerate(scan.ranges):
@@ -52,17 +51,15 @@ class PX4ObstacleBridge(Node):
 
             index = int(round(px4_angle / 5.0)) % 72
 
-            # NaN and negative infinity are invalid/unknown
             if math.isnan(distance) or distance == -math.inf:
                 continue
 
-            # Positive infinity or beyond 30 m means clear
-            if distance == math.inf or distance > 30.0:
-                if distances[index] == 65535:
-                    distances[index] = 3001
+            if distance < scan.range_min:
                 continue
 
-            if distance < scan.range_min:
+            if distance == math.inf or distance > scan.range_max:
+                if distances[index] == 65535:
+                    distances[index] = 3001
                 continue
 
             distance_cm = int(distance * 100)
@@ -71,8 +68,7 @@ class PX4ObstacleBridge(Node):
                 distances[index] = distance_cm
             else:
                 distances[index] = min(
-                    distances[index],
-                    distance_cm
+                    distances[index], distance_cm
                 )
 
         msg.distances = distances
@@ -86,13 +82,10 @@ def main(args=None):
 
     try:
         rclpy.spin(node)
-
     except KeyboardInterrupt:
         pass
-
     finally:
         node.destroy_node()
-
         if rclpy.ok():
             rclpy.shutdown()
 
