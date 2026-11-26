@@ -21,6 +21,10 @@ setup(
             os.path.join('share', package_name, 'launch'),
             glob('launch/*.launch.py')
         ),
+        (
+            os.path.join('share', package_name, 'rviz'),
+            glob('rviz/*.rviz')
+        ),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -34,6 +38,7 @@ setup(
             'lidar_node = lidar_processor.lidar_node:main',
             'px4_obstacle_bridge = lidar_processor.px4_obstacle_bridge:main',
             'avoidance_controller = lidar_processor.avoidance_controller:main',
+            'goto_node = lidar_processor.goto_node:main',
         ],
     },
 )

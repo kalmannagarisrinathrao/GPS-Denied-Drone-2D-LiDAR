@@ -13,7 +13,7 @@ class PX4ObstacleBridge(Node):
 
         self.subscription = self.create_subscription(
             LaserScan,
-            '/world/walls/model/x500_lidar_2d_0/link/link/sensor/lidar_2d_v2/scan',
+            '/scan',
             self.lidar_callback,
             10
         )

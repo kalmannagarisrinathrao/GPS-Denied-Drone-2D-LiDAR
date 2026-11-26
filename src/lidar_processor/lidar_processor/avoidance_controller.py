@@ -49,7 +49,7 @@ class AvoidanceController(Node):
         # LiDAR subscription
         self.create_subscription(
             LaserScan,
-            '/world/walls/model/x500_lidar_2d_0/link/link/sensor/lidar_2d_v2/scan',
+            '/scan',
             self.scan_callback,
             10
         )
